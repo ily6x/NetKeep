@@ -1,0 +1,405 @@
+/* ============================================
+   NetKeep — style.css
+   ============================================ */
+
+/* --- Tokens --- */
+:root {
+  --bg-body:     #0d0f18;
+  --bg-sidebar:  #11131e;
+  --bg-card:     #181b2a;
+  --bg-card-alt: #1e2236;
+  --accent:      #6c63ff;
+  --accent-dim:  #3d3880;
+  --success:     #2ecc71;
+  --warning:     #f39c12;
+  --danger:      #e74c3c;
+  --text:        #dde1f0;
+  --text-muted:  #6b7099;
+  --border:      #252840;
+  --radius:      12px;
+  --radius-sm:   8px;
+  --sidebar-w:   230px;
+  --transition:  0.18s ease;
+}
+
+/* --- Reset / Base --- */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg-body);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* ============================================
+   SIDEBAR
+   ============================================ */
+.nk-sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  z-index: 100;
+  overflow-y: auto;
+}
+
+.nk-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.3px;
+  margin-bottom: 36px;
+  padding: 0 8px;
+}
+
+.nk-logo i { font-size: 1.3rem; }
+
+.nk-nav-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 0 12px;
+  margin: 16px 0 6px;
+}
+
+.nk-nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 13.5px;
+  transition: background var(--transition), color var(--transition);
+  margin-bottom: 2px;
+}
+
+.nk-nav a:hover { background: var(--bg-card); color: var(--text); }
+.nk-nav a.active { background: var(--accent-dim); color: #fff; }
+.nk-nav a i { font-size: 15px; min-width: 18px; }
+
+.nk-sidebar-footer {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.nk-sidebar-footer a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-size: 13.5px;
+  transition: background var(--transition), color var(--transition);
+}
+
+.nk-sidebar-footer a:hover {
+  background: rgba(231, 76, 60, 0.15);
+  color: var(--danger);
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.nk-main {
+  margin-left: var(--sidebar-w);
+  padding: 32px 36px;
+  min-height: 100vh;
+}
+
+.nk-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.nk-page-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.nk-page-title span {
+  color: var(--text-muted);
+  font-weight: 400;
+  font-size: 0.85rem;
+  margin-left: 8px;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+.nk-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+}
+
+.nk-stat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nk-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.nk-stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+}
+
+.nk-stat-icon {
+  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-dim);
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+/* ============================================
+   TABLE
+   ============================================ */
+.nk-table-wrap {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.nk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.nk-table thead th {
+  padding: 13px 18px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card-alt);
+}
+
+.nk-table tbody td {
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.nk-table tbody tr:last-child td { border-bottom: none; }
+.nk-table tbody tr:hover td { background: var(--bg-card-alt); }
+
+/* ============================================
+   BADGES
+   ============================================ */
+.nk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.nk-badge-critique      { background: rgba(231,76,60,.18);   color: #e74c3c; }
+.nk-badge-moyen         { background: rgba(243,156,18,.18);  color: #f39c12; }
+.nk-badge-faible        { background: rgba(46,204,113,.18);  color: #2ecc71; }
+.nk-badge-ouvert        { background: rgba(108,99,255,.18);  color: #6c63ff; }
+.nk-badge-en_cours      { background: rgba(243,156,18,.18);  color: #f39c12; }
+.nk-badge-resolu        { background: rgba(46,204,113,.18);  color: #2ecc71; }
+.nk-badge-actif         { background: rgba(46,204,113,.18);  color: #2ecc71; }
+.nk-badge-en_reparation { background: rgba(243,156,18,.18);  color: #f39c12; }
+.nk-badge-archive       { background: rgba(107,112,153,.18); color: #6b7099; }
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+.nk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.nk-btn:hover  { opacity: 0.85; transform: translateY(-1px); }
+.nk-btn:active { transform: translateY(0); }
+
+.nk-btn-primary { background: var(--accent);   color: #fff; }
+.nk-btn-success { background: var(--success);  color: #fff; }
+.nk-btn-warning { background: var(--warning);  color: #fff; }
+.nk-btn-danger  { background: var(--danger);   color: #fff; }
+.nk-btn-ghost   { background: var(--bg-card-alt); color: var(--text); border: 1px solid var(--border); }
+.nk-btn-sm      { padding: 5px 10px; font-size: 12px; }
+
+/* ============================================
+   FORMS
+   ============================================ */
+.nk-form-group { margin-bottom: 18px; }
+
+.nk-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+  letter-spacing: 0.4px;
+}
+
+.nk-input,
+.nk-select,
+.nk-textarea {
+  width: 100%;
+  background: var(--bg-body);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  padding: 9px 13px;
+  font-size: 13.5px;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+}
+
+.nk-input:focus,
+.nk-select:focus,
+.nk-textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(108,99,255,.18);
+}
+
+.nk-textarea { resize: vertical; min-height: 90px; }
+.nk-select option { background: var(--bg-card); }
+
+.nk-alert {
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.nk-alert-danger {
+  background: rgba(231,76,60,.15);
+  color: #e74c3c;
+  border-left: 3px solid #e74c3c;
+}
+
+/* ============================================
+   LOGIN PAGE
+   ============================================ */
+.nk-login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-body);
+}
+
+.nk-login-box {
+  width: 100%;
+  max-width: 400px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 36px;
+}
+
+.nk-login-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.nk-login-subtitle {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-bottom: 32px;
+}
+
+/* ============================================
+   MODAL
+   ============================================ */
+.modal {
+  background: rgba(0, 0, 0, 0.85) !important; 
+}
+
+.modal-backdrop { 
+  display: none !important; 
+}
+
+.modal-content {
+  background: var(--bg-card) !important; 
+  border: 3px solid var(--accent-dim) !important;);
+  border-radius: var(--radius);
+  color: var(--text);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6); 
+}
+.modal-body .form-control::placeholder,
+.modal-body .nk-textarea::placeholder,
+.modal-body .nk-input::placeholder { 
+  color: rgba(255, 255, 255, 0.5) !important; 
+}
+
+/* ============================================
+   UTILITIES
+   ============================================ */
+.text-muted-nk { color: var(--text-muted); }
+.text-accent    { color: var(--accent); }
+.gap-2          { gap: 8px; }
+.mt-auto        { margin-top: auto; }
+
+/* Scrollbar */
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
