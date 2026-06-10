@@ -6,7 +6,7 @@
     <title>NetKeep — Connexion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/NetKeep/public/css/style.css" rel="stylesheet">
+    <link href="public/css/style.css" rel="stylesheet">
 </head>
 <body>
 
@@ -16,7 +16,7 @@
         <div class="nk-login-logo">
             <i class="bi bi-pc-display-horizontal"></i> NetKeep
         </div>
-        <p class="nk-login-subtitle">Gestion de parc &amp; Helpdesk — BioTech Solutions</p>
+        <p class="nk-login-subtitle">Gestion de parc &amp; Helpdesk — NetKeep</p>
 
         <?php if (isset($error)): ?>
             <div class="nk-alert nk-alert-danger">
@@ -24,7 +24,7 @@
             </div>
         <?php endif; ?>
 
-        <form method="POST" action="/NetKeep/index.php?page=login">
+        <form method="POST" action="index.php?page=login">
             <div class="nk-form-group">
                 <label class="nk-label" for="email">Adresse e-mail</label>
                 <input
@@ -32,7 +32,7 @@
                     id="email"
                     name="email"
                     class="nk-input"
-                    placeholder="prenom.nom@biotech.fr"
+                    placeholder="prenom.nom@netkeep.fr"
                     required
                     autocomplete="email"
                 >
@@ -57,7 +57,7 @@
         </form>
 
         <p class="text-center text-muted-nk mt-4" style="font-size:12px;">
-            Accès réservé aux employés et techniciens BioTech Solutions
+            Accès réservé aux employés et techniciens NetKeep
         </p>
     </div>
 </div>

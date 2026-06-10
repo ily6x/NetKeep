@@ -6,7 +6,7 @@ class EmployeController
 {
     private function checkAuth(): void
     {
-        if (!isset($_SESSION['user_id']) || ($_SESSION['user_role'] ?? '') !== 'employe') {
+        if (!isset($_SESSION['user_id'])) {
             header('Location: index.php?page=login');
             exit;
         }
@@ -15,26 +15,23 @@ class EmployeController
     public function dashboard(): void
     {
         $this->checkAuth();
+        $liste    = (new Ticket())->findByAuteur($_SESSION['user_id']);
+        $materiels = (new Materiel())->findByUser($_SESSION['user_id']);
         require_once __DIR__ . '/../views/employe/dashboard.php';
     }
 
     public function monParc(): void
     {
         $this->checkAuth();
-        $materiel = new Materiel();
-        $liste = $materiel->findByUser($_SESSION['user_id']);
+        $liste = (new Materiel())->findByUser($_SESSION['user_id']);
         require_once __DIR__ . '/../views/employe/mon_parc.php';
     }
 
     public function mesTickets(): void
     {
         $this->checkAuth();
-        $ticket = new Ticket();
-        $liste = $ticket->findByAuteur($_SESSION['user_id']);
-
-        $materiel = new Materiel();
-        $materiels = $materiel->findByUser($_SESSION['user_id']);
-
+        $liste    = (new Ticket())->findByAuteur($_SESSION['user_id']);
+        $materiels = (new Materiel())->findByUser($_SESSION['user_id']);
         require_once __DIR__ . '/../views/employe/mes_tickets.php';
     }
 
@@ -47,11 +44,11 @@ class EmployeController
             exit;
         }
 
-        $titre = trim($_POST['titre'] ?? '');
-        $description = trim($_POST['description'] ?? '');
-        $urgence = $_POST['urgence'] ?? 'faible';
+        $titre         = trim($_POST['titre'] ?? '');
+        $description   = trim($_POST['description'] ?? '');
+        $urgence       = $_POST['urgence'] ?? 'faible';
         $type_probleme = $_POST['type_probleme'] ?? 'autre';
-        $id_materiel = !empty($_POST['id_materiel']) ? (int) $_POST['id_materiel'] : null;
+        $id_materiel   = !empty($_POST['id_materiel']) ? (int) $_POST['id_materiel'] : null;
 
         if ($titre && $description) {
             (new Ticket())->create(
