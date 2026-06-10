@@ -1,4 +1,8 @@
-<?php require_once __DIR__ . '/../layout/header.php'; ?>
+<?php 
+require_once __DIR__ . '/../layout/header.php';
+$materiels = $materiels ?? [];
+$liste = $liste ?? [];
+?>
 
 <div class="nk-page-header">
     <h1 class="nk-page-title">Mes tickets</h1>
