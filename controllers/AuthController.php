@@ -9,8 +9,19 @@ class AuthController
             $email = trim($_POST['email'] ?? '');
             $password = $_POST['password'] ?? '';
 
-            $user = new User();
-            $result = $user->authenticate($email, $password);
+            if ($email === '' || $password === '') {
+                $error = 'Veuillez renseigner votre email et votre mot de passe.';
+                require_once __DIR__ . '/../views/layout/login.php';
+                return;
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $error = 'Format d\'email invalide.';
+                require_once __DIR__ . '/../views/layout/login.php';
+                return;
+            }
+
+            $result = User::authenticate($email, $password);
 
             if ($result) {
                 $_SESSION['user_id'] = $result->getId();

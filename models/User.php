@@ -1,32 +1,28 @@
 <?php
 require_once __DIR__ . '/../config/database.php';
 
-class User
+abstract class User
 {
-    private int $id;
-    private string $nom;
-    private string $prenom;
-    private string $email;
-    private string $password;
-    private string $role;
-    private ?int $niveau_support;
+    protected int $id;
+    protected string $nom;
+    protected string $prenom;
+    protected string $email;
+    protected string $password;
+    protected string $role;
 
-    private PDO $pdo;
-
-    public function __construct()
+    protected static function pdo(): PDO
     {
-        $this->pdo = (new Database())->getConnection();
+        return (new Database())->getConnection();
     }
 
-    private function hydrate(array $data): self
+    protected function hydrate(array $data): static
     {
-        $this->id = $data['id'];
-        $this->nom = $data['nom'];
-        $this->prenom = $data['prenom'];
-        $this->email = $data['email'];
+        $this->id       = (int) $data['id'];
+        $this->nom      = $data['nom'];
+        $this->prenom   = $data['prenom'];
+        $this->email    = $data['email'];
         $this->password = $data['password'];
-        $this->role = $data['role'];
-        $this->niveau_support = $data['niveau_support'];
+        $this->role     = $data['role'];
         return $this;
     }
 
@@ -36,82 +32,102 @@ class User
     public function getEmail(): string { return $this->email; }
     public function getPassword(): string { return $this->password; }
     public function getRole(): string { return $this->role; }
-    public function getNiveauSupport(): ?int { return $this->niveau_support; }
 
-    public function isTechnicien(): bool { return $this->role === 'technicien'; }
-    public function isEmploye(): bool { return $this->role === 'employe'; }
+    public function isTechnicien(): bool { return $this instanceof Technicien; }
+    public function isEmploye(): bool { return $this instanceof Employe; }
 
-    public function findByEmail(string $email): self|false
+    // Méthode polymorphe : libellé du rôle propre à chaque sous-classe
+    abstract public function getLibelleRole(): string;
+
+    // Fabrique : instancie Employe ou Technicien selon le champ "role"
+    private static function creerDepuisLigne(array $data): User
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM utilisateurs WHERE email = :email');
+        $instance = $data['role'] === 'technicien' ? new Technicien() : new Employe();
+        return $instance->hydrate($data);
+    }
+
+    public static function findByEmail(string $email): User|false
+    {
+        $stmt = self::pdo()->prepare('SELECT * FROM utilisateurs WHERE email = :email');
         $stmt->execute([':email' => $email]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data ? (new self())->hydrate($data) : false;
+        return $data ? self::creerDepuisLigne($data) : false;
     }
 
-    public function findById(int $id): self|false
+    public static function findById(int $id): User|false
     {
-        $stmt = $this->pdo->prepare('SELECT * FROM utilisateurs WHERE id = :id');
+        $stmt = self::pdo()->prepare('SELECT * FROM utilisateurs WHERE id = :id');
         $stmt->execute([':id' => $id]);
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $data ? (new self())->hydrate($data) : false;
+        return $data ? self::creerDepuisLigne($data) : false;
     }
 
-    public function findAll(): array
+    public static function findAll(): array
     {
-        $stmt = $this->pdo->query('SELECT * FROM utilisateurs ORDER BY nom, prenom');
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        return array_map(fn($row) => (new self())->hydrate($row), $results);
+        $stmt = self::pdo()->query('SELECT * FROM utilisateurs ORDER BY nom, prenom');
+        return array_map(fn($row) => self::creerDepuisLigne($row), $stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public function create(string $nom, string $prenom, string $email, string $password, string $role): bool
+    public static function create(string $nom, string $prenom, string $email, string $password, string $role, ?int $niveauSupport = null): bool
     {
-        $stmt = $this->pdo->prepare(
-            'INSERT INTO utilisateurs (nom, prenom, email, password, role)
-             VALUES (:nom, :prenom, :email, :password, :role)'
+        $stmt = self::pdo()->prepare(
+            'INSERT INTO utilisateurs (nom, prenom, email, password, role, niveau_support)
+             VALUES (:nom, :prenom, :email, :password, :role, :niveau_support)'
         );
-
         return $stmt->execute([
-            ':nom' => $nom,
-            ':prenom' => $prenom,
-            ':email' => $email,
-            ':password' => password_hash($password, PASSWORD_BCRYPT),
-            ':role' => $role,
+            ':nom'            => $nom,
+            ':prenom'         => $prenom,
+            ':email'          => $email,
+            ':password'       => password_hash($password, PASSWORD_BCRYPT),
+            ':role'           => $role,
+            ':niveau_support' => $role === 'technicien' ? ($niveauSupport ?? 1) : null,
         ]);
     }
 
-    public function update(int $id, string $nom, string $prenom, string $email, string $role): bool
+    public static function update(int $id, string $nom, string $prenom, string $email, string $role, ?int $niveauSupport = null): bool
     {
-        $stmt = $this->pdo->prepare(
-            'UPDATE utilisateurs
-             SET nom = :nom, prenom = :prenom, email = :email, role = :role
+        $stmt = self::pdo()->prepare(
+            'UPDATE utilisateurs SET nom = :nom, prenom = :prenom, email = :email, role = :role, niveau_support = :niveau_support
              WHERE id = :id'
         );
-
         return $stmt->execute([
-            ':nom' => $nom,
-            ':prenom' => $prenom,
-            ':email' => $email,
-            ':role' => $role,
-            ':id' => $id,
+            ':nom'            => $nom,
+            ':prenom'         => $prenom,
+            ':email'          => $email,
+            ':role'           => $role,
+            ':niveau_support' => $role === 'technicien' ? ($niveauSupport ?? 1) : null,
+            ':id'             => $id,
         ]);
     }
 
-    public function delete(int $id): bool
+    public static function delete(int $id): bool
     {
-        $stmt = $this->pdo->prepare('DELETE FROM utilisateurs WHERE id = :id');
+        $stmt = self::pdo()->prepare('DELETE FROM utilisateurs WHERE id = :id');
         return $stmt->execute([':id' => $id]);
     }
 
-    public function authenticate(string $email, string $password): self|false
+    public static function emailExiste(string $email, ?int $excludeId = null): bool
     {
-        $user = $this->findByEmail($email);
-
-        if ($user && password_verify($password, $user->getPassword())) {
-        return $user;
-     }
-
-     return false;
+        $sql = 'SELECT id FROM utilisateurs WHERE email = :email';
+        $params = [':email' => $email];
+        if ($excludeId !== null) {
+            $sql .= ' AND id != :id';
+            $params[':id'] = $excludeId;
+        }
+        $stmt = self::pdo()->prepare($sql);
+        $stmt->execute($params);
+        return (bool) $stmt->fetch();
     }
-    
+
+    public static function authenticate(string $email, string $password): User|false
+    {
+        $user = self::findByEmail($email);
+        if ($user && password_verify($password, $user->getPassword())) {
+            return $user;
+        }
+        return false;
+    }
 }
+
+require_once __DIR__ . '/Employe.php';
+require_once __DIR__ . '/Technicien.php';

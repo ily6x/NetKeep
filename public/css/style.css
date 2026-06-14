@@ -1,405 +1,401 @@
-/* ============================================
-   NetKeep — style.css
-   ============================================ */
+/* =========================================================
+   NetKeep — Design System v3
+   IT Service Management console
+   ========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap');
 
-/* --- Tokens --- */
 :root {
-  --bg-body:     #0d0f18;
-  --bg-sidebar:  #11131e;
-  --bg-card:     #181b2a;
-  --bg-card-alt: #1e2236;
-  --accent:      #6c63ff;
-  --accent-dim:  #3d3880;
-  --success:     #2ecc71;
-  --warning:     #f39c12;
-  --danger:      #e74c3c;
-  --text:        #dde1f0;
-  --text-muted:  #6b7099;
-  --border:      #252840;
-  --radius:      12px;
-  --radius-sm:   8px;
-  --sidebar-w:   230px;
-  --transition:  0.18s ease;
+  --bg-body:      #08090d;
+  --bg-sidebar:   #0b0d13;
+  --bg-card:      #12141b;
+  --bg-card-alt:  #171a23;
+  --bg-input:     #0d0f15;
+  --bg-elevated:  #1a1d27;
+
+  --accent:       #7c8cff;
+  --accent-soft:  #aab4ff;
+  --accent2:      #4fd1ff;
+  --accent-dim:   #1c2138;
+  --accent-glow:  rgba(124,140,255,.30);
+
+  --success:      #3ddc97;
+  --success-dim:  rgba(61,220,151,.12);
+  --warning:      #ffc26b;
+  --warning-dim:  rgba(255,194,107,.12);
+  --danger:       #ff6b6b;
+  --danger-dim:   rgba(255,107,107,.12);
+
+  --text:         #f3f4f8;
+  --text-muted:   #868fa6;
+  --text-dim:     #4b5066;
+
+  --border:       #1f2230;
+  --border-soft:  #181b26;
+  --border-strong: #2a2e40;
+
+  --radius-lg:    18px;
+  --radius:       13px;
+  --radius-sm:    9px;
+  --sidebar-w:    248px;
+
+  --ease:         cubic-bezier(.22,1,.36,1);
+  --ease-fast:    cubic-bezier(.4,0,.2,1);
+  --t-fast:       .14s;
+  --t-base:       .22s;
+
+  --font-ui:      'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+
+  --shadow-sm:    0 1px 2px rgba(0,0,0,.4);
+  --shadow-md:    0 8px 24px -8px rgba(0,0,0,.5), 0 2px 6px rgba(0,0,0,.3);
+  --shadow-lg:    0 24px 64px -16px rgba(0,0,0,.6), 0 4px 16px rgba(0,0,0,.35);
+  --shadow-accent: 0 8px 24px -6px var(--accent-glow);
 }
 
-/* --- Reset / Base --- */
 *, *::before, *::after { box-sizing: border-box; }
+
+html { color-scheme: dark; }
 
 body {
   margin: 0;
-  background: var(--bg-body);
+  background:
+    radial-gradient(1200px 640px at 100% -8%, rgba(124,140,255,.09), transparent 62%),
+    radial-gradient(900px 560px at -8% 102%, rgba(79,209,255,.06), transparent 60%),
+    var(--bg-body);
   color: var(--text);
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: var(--font-ui);
   font-size: 14px;
   line-height: 1.6;
+  letter-spacing: -.01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01" on, "cv05" on;
 }
 
 a { color: inherit; text-decoration: none; }
+::selection { background: var(--accent-dim); color: #fff; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
-/* ============================================
+/* =========================================================
    SIDEBAR
-   ============================================ */
+   ========================================================= */
 .nk-sidebar {
-  position: fixed;
-  top: 0; left: 0;
-  width: var(--sidebar-w);
-  height: 100vh;
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  padding: 24px 16px;
-  z-index: 100;
-  overflow-y: auto;
+  position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(124,140,255,.05), transparent 30%),
+    var(--bg-sidebar);
+  border-right: 1px solid var(--border-soft);
+  display: flex; flex-direction: column;
+  padding: 26px 16px;
+  z-index: 100; overflow-y: auto;
 }
 
 .nk-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: -0.3px;
-  margin-bottom: 36px;
-  padding: 0 8px;
+  display: flex; align-items: center; gap: 11px;
+  font-size: 1.15rem; font-weight: 800; color: var(--text);
+  letter-spacing: -.03em;
+  margin-bottom: 40px; padding: 2px 8px;
 }
-
-.nk-logo i { font-size: 1.3rem; }
+.nk-logo i {
+  font-size: 1.05rem; color: #fff; width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(150deg, var(--accent), var(--accent2));
+  border-radius: 10px;
+  box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,.25);
+}
 
 .nk-nav-label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  padding: 0 12px;
-  margin: 16px 0 6px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase;
+  color: var(--text-dim); padding: 0 12px; margin: 22px 0 8px;
 }
+.nk-nav-label:first-of-type { margin-top: 0; }
 
 .nk-nav a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  font-size: 13.5px;
-  transition: background var(--transition), color var(--transition);
-  margin-bottom: 2px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  color: var(--text-muted); font-size: 13.5px; font-weight: 500;
+  transition: background var(--t-fast) var(--ease-fast), color var(--t-fast) var(--ease-fast), transform var(--t-fast) var(--ease-fast);
+  margin-bottom: 2px; position: relative;
 }
-
-.nk-nav a:hover { background: var(--bg-card); color: var(--text); }
-.nk-nav a.active { background: var(--accent-dim); color: #fff; }
-.nk-nav a i { font-size: 15px; min-width: 18px; }
-
-.nk-sidebar-footer {
-  margin-top: auto;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
+.nk-nav a:hover { background: var(--bg-card); color: var(--text); transform: translateX(2px); }
+.nk-nav a.active {
+  background: linear-gradient(90deg, var(--accent-dim) 0%, rgba(124,140,255,.04) 100%);
+  color: #fff; font-weight: 600;
 }
+.nk-nav a.active::before {
+  content: ''; position: absolute; left: -16px; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 20px;
+  background: linear-gradient(180deg, var(--accent), var(--accent2));
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+.nk-nav a i { font-size: 16px; min-width: 18px; text-align: center; }
 
+.nk-sidebar-footer { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--border-soft); }
 .nk-sidebar-footer a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 12px;
-  border-radius: var(--radius-sm);
-  color: var(--text-muted);
-  font-size: 13.5px;
-  transition: background var(--transition), color var(--transition);
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 12px; border-radius: var(--radius-sm);
+  color: var(--text-muted); font-size: 13.5px; font-weight: 500;
+  transition: background var(--t-fast) var(--ease-fast), color var(--t-fast) var(--ease-fast);
 }
+.nk-sidebar-footer a:hover { background: var(--danger-dim); color: var(--danger); }
 
-.nk-sidebar-footer a:hover {
-  background: rgba(231, 76, 60, 0.15);
-  color: var(--danger);
-}
-
-/* ============================================
-   MAIN CONTENT
-   ============================================ */
-.nk-main {
-  margin-left: var(--sidebar-w);
-  padding: 32px 36px;
-  min-height: 100vh;
-}
+/* =========================================================
+   MAIN
+   ========================================================= */
+.nk-main { margin-left: var(--sidebar-w); padding: 36px 44px 56px; min-height: 100vh; }
 
 .nk-page-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 28px;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 32px; flex-wrap: wrap; gap: 14px;
 }
-
 .nk-page-title {
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: var(--text);
-  margin: 0;
+  font-size: 1.6rem; font-weight: 800; color: var(--text);
+  margin: 0; letter-spacing: -.025em;
 }
-
 .nk-page-title span {
-  color: var(--text-muted);
-  font-weight: 400;
-  font-size: 0.85rem;
-  margin-left: 8px;
+  color: var(--text-muted); font-weight: 400; font-size: .8rem;
+  margin-left: 12px; letter-spacing: 0;
 }
 
-/* ============================================
+/* =========================================================
    CARDS
-   ============================================ */
+   ========================================================= */
 .nk-card {
-  background: var(--bg-card);
+  background: linear-gradient(165deg, var(--bg-card-alt) 0%, var(--bg-card) 100%);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 22px 24px;
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,.025);
+  transition: border-color var(--t-base) var(--ease);
 }
 
 .nk-stat {
-  background: var(--bg-card);
+  background: linear-gradient(165deg, var(--bg-card-alt) 0%, var(--bg-card) 100%);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 20px 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  display: flex; flex-direction: column; gap: 10px;
+  position: relative; overflow: hidden;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--t-base) var(--ease), border-color var(--t-base) var(--ease), box-shadow var(--t-base) var(--ease);
 }
+.nk-stat::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(124,140,255,.06), transparent 50%);
+  opacity: 0; transition: opacity var(--t-base) var(--ease); pointer-events: none;
+}
+.nk-stat:hover {
+  transform: translateY(-4px);
+  border-color: rgba(124,140,255,.4);
+  box-shadow: var(--shadow-lg), var(--shadow-accent);
+}
+.nk-stat:hover::after { opacity: 1; }
 
 .nk-stat-label {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase;
+  color: var(--text-muted); position: relative; z-index: 1;
 }
-
 .nk-stat-value {
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1;
-  color: var(--text);
+  font-family: var(--font-mono); font-size: 2.25rem; font-weight: 600;
+  line-height: 1; color: var(--text); letter-spacing: -.04em;
+  position: relative; z-index: 1;
 }
 
 .nk-stat-icon {
-  font-size: 1.5rem;
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--accent-dim);
-  color: var(--accent);
-  margin-bottom: 4px;
+  font-size: 1.25rem; width: 44px; height: 44px; border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(150deg, var(--accent-dim), rgba(124,140,255,.04));
+  color: var(--accent-soft); margin-bottom: 4px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.06);
+  position: relative; z-index: 1;
 }
+.nk-stat.is-warning .nk-stat-icon { background: linear-gradient(150deg, var(--warning-dim), rgba(255,194,107,.03)); color: var(--warning); }
+.nk-stat.is-danger  .nk-stat-icon { background: linear-gradient(150deg, var(--danger-dim), rgba(255,107,107,.03)); color: var(--danger); }
+.nk-stat.is-success .nk-stat-icon { background: linear-gradient(150deg, var(--success-dim), rgba(61,220,151,.03)); color: var(--success); }
 
-/* ============================================
+/* =========================================================
    TABLE
-   ============================================ */
+   ========================================================= */
 .nk-table-wrap {
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-lg);
   overflow: hidden;
+  box-shadow: var(--shadow-md);
 }
-
-.nk-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13.5px;
-}
-
+.nk-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 .nk-table thead th {
-  padding: 13px 18px;
-  text-align: left;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+  padding: 14px 22px; text-align: left;
+  font-size: 10.5px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase;
   color: var(--text-muted);
   border-bottom: 1px solid var(--border);
   background: var(--bg-card-alt);
 }
-
 .nk-table tbody td {
-  padding: 13px 18px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text);
-  vertical-align: middle;
+  padding: 14px 22px; border-bottom: 1px solid var(--border-soft);
+  color: var(--text); vertical-align: middle;
 }
-
 .nk-table tbody tr:last-child td { border-bottom: none; }
-.nk-table tbody tr:hover td { background: var(--bg-card-alt); }
+.nk-table tbody tr { transition: background var(--t-fast) var(--ease-fast); }
+.nk-table tbody tr:hover td { background: var(--bg-elevated); }
+.nk-table td.text-muted-nk,
+.nk-table td:first-child { font-family: var(--font-mono); font-size: 12.5px; color: var(--text-muted); }
 
-/* ============================================
+/* =========================================================
    BADGES
-   ============================================ */
+   ========================================================= */
 .nk-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  font-size: 11.5px;
-  font-weight: 600;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 20px;
+  font-size: 11px; font-weight: 700; font-family: var(--font-mono); letter-spacing: .3px;
+  border: 1px solid transparent;
 }
+.nk-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: currentColor; flex-shrink: 0;
+  box-shadow: 0 0 0 3px currentColor; opacity: .9;
+}
+.nk-badge::before { box-shadow: 0 0 6px currentColor; }
 
-.nk-badge-critique      { background: rgba(231,76,60,.18);   color: #e74c3c; }
-.nk-badge-moyen         { background: rgba(243,156,18,.18);  color: #f39c12; }
-.nk-badge-faible        { background: rgba(46,204,113,.18);  color: #2ecc71; }
-.nk-badge-ouvert        { background: rgba(108,99,255,.18);  color: #6c63ff; }
-.nk-badge-en_cours      { background: rgba(243,156,18,.18);  color: #f39c12; }
-.nk-badge-resolu        { background: rgba(46,204,113,.18);  color: #2ecc71; }
-.nk-badge-actif         { background: rgba(46,204,113,.18);  color: #2ecc71; }
-.nk-badge-en_reparation { background: rgba(243,156,18,.18);  color: #f39c12; }
-.nk-badge-archive       { background: rgba(107,112,153,.18); color: #6b7099; }
+.nk-badge-critique      { background: var(--danger-dim);  color: var(--danger);  border-color: rgba(255,107,107,.18); }
+.nk-badge-moyen         { background: var(--warning-dim); color: var(--warning); border-color: rgba(255,194,107,.18); }
+.nk-badge-faible        { background: var(--success-dim); color: var(--success); border-color: rgba(61,220,151,.18); }
+.nk-badge-ouvert        { background: var(--accent-dim);  color: var(--accent-soft); border-color: rgba(124,140,255,.2); }
+.nk-badge-en_cours      { background: var(--warning-dim); color: var(--warning); border-color: rgba(255,194,107,.18); }
+.nk-badge-resolu        { background: var(--success-dim); color: var(--success); border-color: rgba(61,220,151,.18); }
+.nk-badge-actif         { background: var(--success-dim); color: var(--success); border-color: rgba(61,220,151,.18); }
+.nk-badge-en_reparation { background: var(--warning-dim); color: var(--warning); border-color: rgba(255,194,107,.18); }
+.nk-badge-archive       { background: rgba(134,143,166,.1); color: var(--text-muted); border-color: var(--border); }
+.nk-badge-archive::before { display: none; }
 
-/* ============================================
+.nk-badge-employe    { background: var(--accent-dim); color: var(--accent-soft); border-color: rgba(124,140,255,.2); }
+.nk-badge-technicien { background: rgba(79,209,255,.12); color: var(--accent2); border-color: rgba(79,209,255,.2); }
+.nk-badge-employe::before, .nk-badge-technicien::before { display: none; }
+
+/* =========================================================
    BUTTONS
-   ============================================ */
+   ========================================================= */
 .nk-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  border: none;
-  transition: opacity var(--transition), transform var(--transition);
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 19px; border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; font-family: var(--font-ui);
+  cursor: pointer; border: 1px solid transparent;
+  transition: transform var(--t-fast) var(--ease-fast), box-shadow var(--t-base) var(--ease), filter var(--t-fast) var(--ease-fast), border-color var(--t-fast) var(--ease-fast);
+  letter-spacing: -.005em;
 }
+.nk-btn:hover  { transform: translateY(-1px); }
+.nk-btn:active { transform: translateY(0) scale(.98); }
 
-.nk-btn:hover  { opacity: 0.85; transform: translateY(-1px); }
-.nk-btn:active { transform: translateY(0); }
+.nk-btn-primary {
+  background: linear-gradient(150deg, var(--accent) 0%, #5d6df0 100%);
+  color: #fff;
+  box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,.2);
+}
+.nk-btn-primary:hover { box-shadow: 0 10px 28px -6px var(--accent-glow), inset 0 1px 0 rgba(255,255,255,.25); filter: brightness(1.05); }
 
-.nk-btn-primary { background: var(--accent);   color: #fff; }
-.nk-btn-success { background: var(--success);  color: #fff; }
-.nk-btn-warning { background: var(--warning);  color: #fff; }
-.nk-btn-danger  { background: var(--danger);   color: #fff; }
-.nk-btn-ghost   { background: var(--bg-card-alt); color: var(--text); border: 1px solid var(--border); }
-.nk-btn-sm      { padding: 5px 10px; font-size: 12px; }
+.nk-btn-success { background: var(--success); color: #06281d; box-shadow: var(--shadow-sm); }
+.nk-btn-warning { background: var(--warning); color: #2b1a02; box-shadow: var(--shadow-sm); }
+.nk-btn-danger  { background: var(--danger);  color: #2b0a0a; box-shadow: var(--shadow-sm); }
 
-/* ============================================
+.nk-btn-ghost {
+  background: var(--bg-elevated); color: var(--text); border-color: var(--border);
+}
+.nk-btn-ghost:hover { border-color: var(--accent); color: var(--accent-soft); background: var(--accent-dim); }
+
+.nk-btn-sm { padding: 7px 13px; font-size: 12px; }
+
+/* =========================================================
    FORMS
-   ============================================ */
-.nk-form-group { margin-bottom: 18px; }
-
+   ========================================================= */
+.nk-form-group { margin-bottom: 20px; }
 .nk-label {
-  display: block;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 6px;
-  letter-spacing: 0.4px;
+  display: block; font-size: 11.5px; font-weight: 700; color: var(--text-muted);
+  margin-bottom: 7px; letter-spacing: .7px; text-transform: uppercase;
 }
-
-.nk-input,
-.nk-select,
-.nk-textarea {
-  width: 100%;
-  background: var(--bg-body);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-sm);
-  color: var(--text);
-  padding: 9px 13px;
-  font-size: 13.5px;
-  transition: border-color var(--transition), box-shadow var(--transition);
+.nk-input, .nk-select, .nk-textarea, .form-control, .form-select {
+  width: 100%; background: var(--bg-input);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text); padding: 11px 15px; font-size: 13.5px; font-family: var(--font-ui);
+  transition: border-color var(--t-fast) var(--ease-fast), box-shadow var(--t-fast) var(--ease-fast);
   outline: none;
 }
-
-.nk-input:focus,
-.nk-select:focus,
-.nk-textarea:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(108,99,255,.18);
+.nk-input:hover, .nk-select:hover, .form-control:hover, .form-select:hover { border-color: var(--border-strong); }
+.nk-input:focus, .nk-select:focus, .nk-textarea:focus, .form-control:focus, .form-select:focus {
+  border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow);
 }
-
-.nk-textarea { resize: vertical; min-height: 90px; }
-.nk-select option { background: var(--bg-card); }
+.nk-textarea, textarea.form-control { resize: vertical; min-height: 96px; }
+.nk-select option, .form-select option { background: var(--bg-card); }
 
 .nk-alert {
-  padding: 10px 16px;
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  margin-bottom: 16px;
+  padding: 13px 17px; border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 18px;
+  border-left: 3px solid; display: flex; align-items: center; gap: 10px;
 }
+.nk-alert-danger  { background: var(--danger-dim);  color: #ffb3b3; border-color: var(--danger); }
+.nk-alert-success { background: var(--success-dim); color: #9cf2d4; border-color: var(--success); }
 
-.nk-alert-danger {
-  background: rgba(231,76,60,.15);
-  color: #e74c3c;
-  border-left: 3px solid #e74c3c;
-}
-
-/* ============================================
-   LOGIN PAGE
-   ============================================ */
+/* =========================================================
+   LOGIN
+   ========================================================= */
 .nk-login-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--bg-body);
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background:
+    radial-gradient(1000px 600px at 50% -10%, rgba(124,140,255,.16), transparent 60%),
+    radial-gradient(700px 500px at 100% 100%, rgba(79,209,255,.08), transparent 60%),
+    var(--bg-body);
+  padding: 24px;
 }
-
 .nk-login-box {
-  width: 100%;
-  max-width: 400px;
-  background: var(--bg-card);
+  width: 100%; max-width: 416px;
+  background: linear-gradient(165deg, var(--bg-card-alt) 0%, var(--bg-card) 100%);
   border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 40px 36px;
+  border-radius: 22px;
+  padding: 46px 40px;
+  box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,.03);
 }
-
 .nk-login-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 13px;
+  font-size: 1.5rem; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -.03em;
 }
-
-.nk-login-subtitle {
-  color: var(--text-muted);
-  font-size: 13px;
-  margin-bottom: 32px;
+.nk-login-logo i {
+  color: #fff; width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(150deg, var(--accent), var(--accent2));
+  border-radius: 12px;
+  box-shadow: var(--shadow-accent), inset 0 1px 0 rgba(255,255,255,.25);
 }
+.nk-login-subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 34px; }
 
-/* ============================================
+/* =========================================================
    MODAL
-   ============================================ */
-.modal {
-  background: rgba(0, 0, 0, 0.85) !important; 
-}
-
-.modal-backdrop { 
-  display: none !important; 
-}
-
+   ========================================================= */
+.modal { background: rgba(4,5,9,.82) !important; backdrop-filter: blur(6px); }
+.modal-backdrop { display: none !important; }
 .modal-content {
-  background: var(--bg-card) !important; 
-  border: 3px solid var(--accent-dim) !important;);
-  border-radius: var(--radius);
+  background: linear-gradient(165deg, var(--bg-card-alt) 0%, var(--bg-card) 100%) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--radius-lg);
   color: var(--text);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6); 
+  box-shadow: var(--shadow-lg);
 }
 .modal-body .form-control::placeholder,
 .modal-body .nk-textarea::placeholder,
-.modal-body .nk-input::placeholder { 
-  color: rgba(255, 255, 255, 0.5) !important; 
-}
+.modal-body .nk-input::placeholder { color: var(--text-dim) !important; }
 
-/* ============================================
+/* =========================================================
    UTILITIES
-   ============================================ */
+   ========================================================= */
 .text-muted-nk { color: var(--text-muted); }
-.text-accent    { color: var(--accent); }
-.gap-2          { gap: 8px; }
-.mt-auto        { margin-top: auto; }
+.text-accent   { color: var(--accent-soft); }
+.gap-2 { gap: 8px; }
+.mt-auto { margin-top: auto; }
 
-/* Scrollbar */
-::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 7px; height: 7px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
+
+@media (max-width: 900px) {
+  .nk-sidebar { display: none; }
+  .nk-main { margin-left: 0; padding: 24px 18px 40px; }
+}

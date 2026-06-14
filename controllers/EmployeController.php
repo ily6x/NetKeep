@@ -50,7 +50,9 @@ class EmployeController
         $type_probleme = $_POST['type_probleme'] ?? 'autre';
         $id_materiel   = !empty($_POST['id_materiel']) ? (int) $_POST['id_materiel'] : null;
 
-        if ($titre && $description) {
+        if ($titre === '' || $description === '') {
+            $_SESSION['flash_error'] = 'Le titre et la description sont obligatoires.';
+        } else {
             (new Ticket())->create(
                 $titre,
                 $description,
@@ -59,6 +61,7 @@ class EmployeController
                 $_SESSION['user_id'],
                 $type_probleme
             );
+            $_SESSION['flash_success'] = 'Ticket créé avec succès.';
         }
 
         header('Location: index.php?page=mes-tickets');

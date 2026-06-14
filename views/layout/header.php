@@ -79,4 +79,14 @@ $page = $_GET['page'] ?? '';
 </aside>
 
 <main class="nk-main">
+<?php
+if (!empty($_SESSION['flash_success'])): ?>
+    <div class="nk-alert nk-alert-success"><i class="bi bi-check-circle"></i> <?= htmlspecialchars($_SESSION['flash_success']) ?></div>
+<?php endif;
+unset($_SESSION['flash_success']);
+if (!empty($_SESSION['flash_error'])): ?>
+    <div class="nk-alert nk-alert-danger"><i class="bi bi-exclamation-circle"></i> <?= htmlspecialchars($_SESSION['flash_error']) ?></div>
+<?php endif;
+unset($_SESSION['flash_error']);
+?>
 <?php endif; ?>

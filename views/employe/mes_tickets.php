@@ -1,8 +1,4 @@
-<?php 
-require_once __DIR__ . '/../layout/header.php';
-$materiels = $materiels ?? [];
-$liste = $liste ?? [];
-?>
+<?php require_once __DIR__ . '/../layout/header.php'; ?>
 
 <div class="nk-page-header">
     <h1 class="nk-page-title">Mes tickets</h1>
@@ -35,7 +31,7 @@ $liste = $liste ?? [];
                 <select name="id_materiel" style="width:100%;background:var(--bg-body);border:1px solid var(--border);border-radius:8px;padding:.6rem .9rem;color:var(--text);font-size:.9rem;appearance:none;">
                     <option value="">— Aucun —</option>
                     <?php foreach ($materiels as $m): ?>
-                    <option value="<?= $m['id'] ?>"><?= htmlspecialchars($m['nom']) ?> (<?= $m['type'] ?>)</option>
+                    <option value="<?= $m->getId() ?>"><?= htmlspecialchars($m->getNom()) ?> (<?= $m->getType() ?>)</option>
                     <?php endforeach; ?>
                 </select>
             </div>

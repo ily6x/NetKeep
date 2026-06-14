@@ -50,7 +50,7 @@
                 <?php
                     $nb = 0;
                     foreach ($tickets ?? [] as $t) {
-                        if ($t->getUrgence() === 'critique') $nb++;
+                        if ($t->getUrgence() === 'critique' && $t->getStatut() !== 'resolu') $nb++;
                     }
                     echo $nb;
                 ?>

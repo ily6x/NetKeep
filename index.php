@@ -54,6 +54,38 @@ switch ($page) {
         (new TechnicienController())->prendreEnCharge();
         break;
 
+    case 'ajouter-materiel':
+        (new TechnicienController())->ajouterMateriel();
+        break;
+
+    case 'modifier-materiel':
+        (new TechnicienController())->modifierMateriel();
+        break;
+
+    case 'archiver-materiel':
+        (new TechnicienController())->archiverMateriel();
+        break;
+
+    case 'supprimer-materiel':
+        (new TechnicienController())->supprimerMateriel();
+        break;
+
+    case 'affecter-materiel':
+        (new TechnicienController())->affecterMateriel();
+        break;
+
+    case 'ajouter-utilisateur':
+        (new TechnicienController())->ajouterUtilisateur();
+        break;
+
+    case 'modifier-utilisateur':
+        (new TechnicienController())->modifierUtilisateur();
+        break;
+
+    case 'supprimer-utilisateur':
+        (new TechnicienController())->supprimerUtilisateur();
+        break;
+
     case 'resoudre':
         (new TicketController())->resoudre();
         break;

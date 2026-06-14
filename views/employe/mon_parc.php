@@ -12,14 +12,14 @@
                 <div class="d-flex align-items-center gap-3 mb-3">
                     <div class="nk-stat-icon"><i class="bi bi-pc-display"></i></div>
                     <div>
-                        <div style="font-weight:700"><?= htmlspecialchars($m['nom']) ?></div>
-                        <div class="text-muted-nk" style="font-size:.8rem"><?= htmlspecialchars($m['type']) ?></div>
+                        <div style="font-weight:700"><?= htmlspecialchars($m->getNom()) ?></div>
+                        <div class="text-muted-nk" style="font-size:.8rem"><?= htmlspecialchars($m->getType()) ?></div>
                     </div>
                 </div>
                 <table style="width:100%;font-size:.85rem">
-                    <tr><td class="text-muted-nk" style="padding:3px 0;width:40%">N° Série</td><td><?= htmlspecialchars($m['num_serie']) ?></td></tr>
-                    <tr><td class="text-muted-nk" style="padding:3px 0">Statut</td><td><span class="nk-badge nk-badge-<?= $m['statut'] ?>"><?= ucfirst($m['statut']) ?></span></td></tr>
-                    <tr><td class="text-muted-nk" style="padding:3px 0">Achat</td><td><?= $m['date_achat'] ? date('d/m/Y', strtotime($m['date_achat'])) : '—' ?></td></tr>
+                    <tr><td class="text-muted-nk" style="padding:3px 0;width:40%">N° Série</td><td><?= htmlspecialchars($m->getNumSerie()) ?></td></tr>
+                    <tr><td class="text-muted-nk" style="padding:3px 0">Statut</td><td><span class="nk-badge nk-badge-<?= $m->getStatut() ?>"><?= ucfirst($m->getStatut()) ?></span></td></tr>
+                    <tr><td class="text-muted-nk" style="padding:3px 0">Achat</td><td><?= $m->getDateAchat() ? date('d/m/Y', strtotime($m->getDateAchat())) : '—' ?></td></tr>
                 </table>
             </div>
         </div>
